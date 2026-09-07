@@ -81,13 +81,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (saved) {
         setUser(JSON.parse(saved));
       } else {
-        // Inicializa com usuário logado para demonstração imediata mas permite logout/troca de conta
-        setUser(defaultDemoUser);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultDemoUser));
+        setUser(null);
       }
     } catch (e) {
       console.error('Error restoring auth session', e);
-      setUser(defaultDemoUser);
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
@@ -115,25 +113,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return lower.includes('mesconsultoria') || lower.includes('sampalira') || lower.includes('admin') || lower.includes('msconsultoria') || lower.includes('diretoria');
   };
 
-  const loginWithGoogle = async () => {
+  const loginWithGoogle = async (customEmail?: string, customName?: string) => {
     setIsLoading(true);
     sounds.playDataBeep();
-    // Simula autenticação OAuth 2.0 do Google para o Administrador Master
-    await new Promise((r) => setTimeout(r, 1200));
+    await new Promise((r) => setTimeout(r, 800));
+
+    const email = customEmail?.trim() || `cliente.${Math.floor(1000 + Math.random() * 9000)}@gmail.com`;
+    const rawName = customName?.trim() || email.split('@')[0].replace(/[._-]/g, ' ');
+    const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
     const googleUser: AuthUser = {
       id: 'usr_g_' + Math.random().toString(36).substring(2, 9),
-      name: 'Comandante M&S',
-      email: 'mesconsultoria@gmail.com',
-      alias: 'Diretor M&S',
-      avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      role: 'admin',
+      name: formattedName,
+      email: email,
+      alias: formattedName.split(' ')[0] || 'Comandante',
+      avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
+      role: 'user',
       provider: 'google',
       plan: 'pro',
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
       aiSettings: {
-        preferredProvider: 'gemini',
+        preferredProvider: 'groq',
         keyUsageMode: 'system_default',
         customKeys: {}
       }
@@ -145,24 +146,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     speakGreeting(getPersonalizedWelcome(googleUser.name, googleUser.alias));
   };
 
-  const loginWithMicrosoft = async () => {
+  const loginWithMicrosoft = async (customEmail?: string, customName?: string) => {
     setIsLoading(true);
     sounds.playDataBeep();
-    await new Promise((r) => setTimeout(r, 1200));
+    await new Promise((r) => setTimeout(r, 800));
+
+    const email = customEmail?.trim() || `cliente.${Math.floor(1000 + Math.random() * 9000)}@outlook.com`;
+    const rawName = customName?.trim() || email.split('@')[0].replace(/[._-]/g, ' ');
+    const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
     const msUser: AuthUser = {
       id: 'usr_ms_' + Math.random().toString(36).substring(2, 9),
-      name: 'Executivo Microsoft',
-      email: 'corporativo@outlook.com',
-      alias: 'Diretor',
-      avatar_url: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80',
+      name: formattedName,
+      email: email,
+      alias: formattedName.split(' ')[0] || 'Comandante',
+      avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`,
       role: 'user',
       provider: 'microsoft',
       plan: 'pro',
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
       aiSettings: {
-        preferredProvider: 'openai',
+        preferredProvider: 'groq',
         keyUsageMode: 'system_default',
         customKeys: {}
       }

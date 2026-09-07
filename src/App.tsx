@@ -23,10 +23,27 @@ import { HowToUse } from './pages/HowToUse';
 import { News } from './pages/News';
 import { Settings } from './pages/Settings';
 
+import { LockScreen } from './components/LockScreen';
+
 const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageName>('VoiceChat');
   const { isVoiceListening, setIsVoiceListening, activeQuickAction, setActiveQuickAction } = useApp();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#02050e] flex flex-col items-center justify-center text-cyan-400">
+        <div className="w-12 h-12 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin mb-4" />
+        <p className="font-rajdhani text-sm tracking-widest uppercase text-slate-300">Inicializando Protocolo JARVES...</p>
+      </div>
+    );
+  }
+
+  // Se o usuário não estiver autenticado ou não tiver plano ativo, mostra a Tela de Bloqueio com Kiwify
+  if (!isAuthenticated || !user) {
+    return <LockScreen />;
+  }
 
   const renderCurrentPage = () => {
     switch (currentPage) {
@@ -85,11 +102,6 @@ const AppContent: React.FC = () => {
           onClose={() => setActiveQuickAction(null)}
         />
       </Layout>
-
-      {/* Global Authentication Modal (Blocks when user is logged out) */}
-      {!isAuthenticated && !isLoading && (
-        <AuthModal isOpen={true} canClose={false} />
-      )}
     </>
   );
 };
