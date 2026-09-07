@@ -204,46 +204,64 @@ export const Settings: React.FC = () => {
             </div>
           </div>
 
-          {/* Upgrade Plan Buttons */}
-          <div className="grid grid-cols-3 gap-2 shrink-0">
-            <button
-              onClick={() => setUserPlan('free')}
-              className={`p-3 rounded-2xl border text-center transition-all ${
-                user.plan === 'free' 
-                  ? 'bg-slate-800 border-cyan-400 shadow-[0_0_15px_rgba(0,242,254,0.2)]' 
-                  : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
-              }`}
-            >
-              <p className="text-xs font-bold text-white font-rajdhani">FREE</p>
-              <p className="text-[10px] text-slate-400">50 req/dia</p>
-              <p className="text-[11px] text-cyan-400 font-bold mt-1">R$ 0</p>
-            </button>
+          {/* Upgrade Plan Buttons & Kiwify Checkout */}
+          <div className="flex flex-col gap-2 shrink-0">
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                onClick={() => setUserPlan('free')}
+                className={`p-3 rounded-2xl border text-center transition-all ${
+                  user.plan === 'free' 
+                    ? 'bg-slate-800 border-cyan-400 shadow-[0_0_15px_rgba(0,242,254,0.2)]' 
+                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                <p className="text-xs font-bold text-white font-rajdhani">FREE</p>
+                <p className="text-[10px] text-slate-400">50 req/dia</p>
+                <p className="text-[11px] text-cyan-400 font-bold mt-1">R$ 0</p>
+              </button>
 
-            <button
-              onClick={() => setUserPlan('pro')}
-              className={`p-3 rounded-2xl border text-center transition-all ${
-                user.plan === 'pro' 
-                  ? 'bg-cyan-950/60 border-cyan-400 shadow-[0_0_20px_rgba(0,242,254,0.3)]' 
-                  : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
-              }`}
-            >
-              <p className="text-xs font-bold text-cyan-300 font-rajdhani">PRO ⭐</p>
-              <p className="text-[10px] text-slate-400">200 req/dia</p>
-              <p className="text-[11px] text-cyan-400 font-bold mt-1">R$ 29/mês</p>
-            </button>
+              <button
+                onClick={() => {
+                  setUserPlan('pro');
+                  window.open('https://pay.kiwify.com.br/YriEkod', '_blank');
+                }}
+                className={`p-3 rounded-2xl border text-center transition-all ${
+                  user.plan === 'pro' 
+                    ? 'bg-cyan-950/60 border-cyan-400 shadow-[0_0_20px_rgba(0,242,254,0.3)]' 
+                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                <p className="text-xs font-bold text-cyan-300 font-rajdhani">PRO ⭐</p>
+                <p className="text-[10px] text-slate-400">200 req/dia</p>
+                <p className="text-[11px] text-cyan-400 font-bold mt-1">R$ 29/mês</p>
+              </button>
 
-            <button
-              onClick={() => setUserPlan('ultra')}
-              className={`p-3 rounded-2xl border text-center transition-all ${
-                user.plan === 'ultra' 
-                  ? 'bg-purple-950/60 border-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.3)]' 
-                  : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
-              }`}
+              <button
+                onClick={() => {
+                  setUserPlan('ultra');
+                  window.open('https://pay.kiwify.com.br/YriEkod', '_blank');
+                }}
+                className={`p-3 rounded-2xl border text-center transition-all ${
+                  user.plan === 'ultra' 
+                    ? 'bg-purple-950/60 border-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.3)]' 
+                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                <p className="text-xs font-bold text-purple-300 font-rajdhani">ULTRA 🚀</p>
+                <p className="text-[10px] text-slate-400">1000 req/dia</p>
+                <p className="text-[11px] text-purple-400 font-bold mt-1">R$ 99/mês</p>
+              </button>
+            </div>
+
+            <a
+              href="https://pay.kiwify.com.br/YriEkod"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 text-white font-rajdhani font-bold text-xs uppercase tracking-wider text-center shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
             >
-              <p className="text-xs font-bold text-purple-300 font-rajdhani">ULTRA 🚀</p>
-              <p className="text-[10px] text-slate-400">1000 req/dia</p>
-              <p className="text-[11px] text-purple-400 font-bold mt-1">R$ 59/mês</p>
-            </button>
+              <Zap className="w-3.5 h-3.5 text-white animate-pulse" />
+              <span>Assinar Plano Imediato via Kiwify (R$ 29/mês)</span>
+            </a>
           </div>
         </div>
       </div>
