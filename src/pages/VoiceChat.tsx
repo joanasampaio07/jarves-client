@@ -20,9 +20,9 @@ export const VoiceChat: React.FC = () => {
   const [splineLoaded, setSplineLoaded] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   
-  // API Keys
-  const defaultTTS = (import.meta as any).env?.VITE_ELEVENLABS_API_KEY || ['sk_', '0db4bf3a189c2745', 'b186a2464108519137e709c5e045a1f9'].join('');
-  const defaultGroq = (import.meta as any).env?.VITE_GROQ_API_KEY || ['gs', 'k_p7upIhE', 'JCuiCioFEbMiIW', 'Gdyb3FYnKp05kb', 'AyH3EJDuOkp40kqGJ'].join('');
+  // API Keys from Environment or Local Storage
+  const defaultTTS = (import.meta as any).env?.VITE_ELEVENLABS_API_KEY || '';
+  const defaultGroq = (import.meta as any).env?.VITE_GROQ_API_KEY || '';
 
   const [elevenApiKey, setElevenApiKey] = useState(() => localStorage.getItem('jarves_tts_api_key') || defaultTTS);
   const [openaiKey, setOpenaiKey] = useState(() => localStorage.getItem('jarves_openai_key') || '');
