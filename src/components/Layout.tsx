@@ -14,6 +14,7 @@ import {
   HelpCircle, 
   Bell, 
   Settings, 
+  ShieldAlert, 
   Volume2, 
   VolumeX, 
   Mic, 
@@ -46,7 +47,8 @@ export type PageName =
   | 'HowToUse' 
   | 'News' 
   | 'Support' 
-  | 'Settings';
+  | 'Settings'
+  | 'Admin';
 
 interface LayoutProps {
   currentPage: PageName;
@@ -61,7 +63,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentPage, onNavigate, childre
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
-  // Itens de navegação do Usuário Final (Termina em Configurações)
+  // Itens de navegação do JARVES
   const navItems = [
     { name: 'Command Center', page: 'CommandCenter' as PageName, icon: LayoutDashboard, badge: 'IA' },
     { name: 'Chat IA Voz (Robô 3D)', page: 'VoiceChat' as PageName, icon: Bot, badge: '3D' },
@@ -77,6 +79,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentPage, onNavigate, childre
     { name: 'Novidades & Updates', page: 'News' as PageName, icon: Bell },
     { name: 'Como Usar', page: 'HowToUse' as PageName, icon: HelpCircle },
     { name: 'Configurações', page: 'Settings' as PageName, icon: Settings },
+    { name: 'Painel Master (Admin)', page: 'Admin' as PageName, icon: ShieldAlert, badge: 'ROOT' },
   ];
 
   const handleNavClick = (page: PageName) => {

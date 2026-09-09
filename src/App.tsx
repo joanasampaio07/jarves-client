@@ -22,6 +22,7 @@ import { Analytics } from './pages/Analytics';
 import { HowToUse } from './pages/HowToUse';
 import { News } from './pages/News';
 import { Settings } from './pages/Settings';
+import { Admin } from './pages/Admin';
 
 import { LockScreen } from './components/LockScreen';
 
@@ -76,6 +77,8 @@ const AppContent: React.FC = () => {
         return <News />;
       case 'Settings':
         return <Settings />;
+      case 'Admin':
+        return <Admin />;
       default:
         return <VoiceChat />;
     }
